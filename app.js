@@ -379,9 +379,9 @@ function renderSummary(days, currency) {
   if (days.length === 0) return `<div style="text-align:center;padding:3rem 1rem;color:#94a3b8;font-size:13px">Start typing in the notes tab.</div>`;
 
   const boxes = [
-    { label: "Cash", value: totalCash, bg: "rgba(234,243,222,0.7)", bc: "rgba(59,109,17,0.15)", lc: "#3B6D11", vc: "#27500A" },
-    { label: "Card", value: totalCC, bg: "rgba(230,241,251,0.7)", bc: "rgba(24,95,165,0.15)", lc: "#185FA5", vc: "#0C447C" },
-    { label: "Total", value: grandTotal, bg: "rgba(238,237,254,0.7)", bc: "rgba(83,74,183,0.15)", lc: "#534AB7", vc: "#3C3489", bold: true },
+    { label: "Cash", value: totalCash, bg: "rgba(214,233,192,0.9)", bc: "rgba(59,109,17,0.25)", lc: "#3B6D11", vc: "#27500A" },
+    { label: "Card", value: totalCC, bg: "rgba(200,225,248,0.9)", bc: "rgba(24,95,165,0.25)", lc: "#185FA5", vc: "#0C447C" },
+    { label: "Total", value: grandTotal, bg: "rgba(218,215,254,0.9)", bc: "rgba(83,74,183,0.25)", lc: "#534AB7", vc: "#3C3489", bold: true },
   ];
 
   let html = `<div style="display:flex;gap:6px;margin-bottom:14px">`;
