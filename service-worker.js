@@ -1,9 +1,11 @@
-const CACHE_NAME = "trip-exp-cache-v1";
+const CACHE_NAME = "trip-exp-cache-v2";
 const urlsToCache = [
   "./",
   "./index.html",
   "./app.js",
-  "./manifest.json"
+  "./manifest.json",
+  "./icons/icon-192.png",
+  "./icons/icon-512.png"
 ];
 
 self.addEventListener("install", event => {
