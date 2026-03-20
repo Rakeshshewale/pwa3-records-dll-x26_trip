@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Trip Expense Tracker — Project Paper</title>
+<style>
+@media print{body{padding:0;font-size:11px}h1{font-size:22px}h2{font-size:16px;page-break-after:avoid}h3{font-size:13px}pre{font-size:9px}.no-print{display:none}.page-break{page-break-before:always}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,'Times New Roman',serif;color:#1a1a2e;line-height:1.7;padding:40px 20px;max-width:820px;margin:0 auto;background:#fff}
+h1{font-size:28px;font-weight:700;color:#4f46e5;text-align:center;margin-bottom:4px;letter-spacing:-.5px}
+.subtitle{text-align:center;font-size:14px;color:#64748b;margin-bottom:6px}
+.meta{text-align:center;font-size:12px;color:#94a3b8;margin-bottom:30px;padding-bottom:20px;border-bottom:2px solid #4f46e5}
+.meta span{margin:0 8px}
+h2{font-size:20px;font-weight:700;color:#4f46e5;margin:36px 0 14px;padding:8px 0 6px;border-bottom:1.5px solid #e2e8f0}
+h3{font-size:15px;font-weight:700;color:#334155;margin:20px 0 8px}
+p{margin:0 0 12px;font-size:14px}
+ul,ol{margin:0 0 14px 24px;font-size:14px}
+li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:12.5px}
+th{background:#f1f5f9;padding:8px 10px;text-align:left;font-weight:700;color:#334155;border:1px solid #e2e8f0;font-size:11px;text-transform:uppercase;letter-spacing:.3px}
+td{padding:7px 10px;border:1px solid #e2e8f0;color:#475569;vertical-align:top}
+tr:nth-child(even){background:#fafbfc}
+code{font-family:'SF Mono',Consolas,monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:12px;color:#4f46e5}
+pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:11.5px;line-height:1.5;margin:10px 0 16px;font-family:'SF Mono',Consolas,monospace}
+pre code{background:none;color:inherit;padding:0}
+.arch-box{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:16px;margin:14px 0 18px;font-family:'SF Mono',Consolas,monospace;font-size:11px;line-height:1.6;white-space:pre;overflow-x:auto;color:#334155}
+.highlight{background:linear-gradient(135deg,#eff0ff,#f5f3ff);border-left:4px solid #4f46e5;padding:14px 18px;border-radius:0 8px 8px 0;margin:14px 0 18px;font-size:13px}
+.highlight strong{color:#4f46e5}
+.badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.b-green{background:#dcfce7;color:#166534}
+.b-blue{background:#eff6ff;color:#1e40af}
+.b-purple{background:#f5f3ff;color:#5b21b6}
+.b-orange{background:#fff7ed;color:#9a3412}
+.b-red{background:#fef2f2;color:#991b1b}
+.b-gray{background:#f1f5f9;color:#475569}
+.b-teal{background:#e1f5ee;color:#0F6E56}
+.b-amber{background:#faeeda;color:#854F0B}
+.toc{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px 24px;margin:0 0 30px}
+.toc-title{font-size:14px;font-weight:700;color:#334155;margin-bottom:10px}
+.toc ol{margin:0;padding-left:20px}
+.toc li{font-size:13px;color:#4f46e5;margin-bottom:3px}
+.toc a{color:#4f46e5;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.print-btn{display:block;margin:0 auto 30px;padding:12px 32px;background:#4f46e5;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer}
+.print-btn:hover{background:#4338ca}
+.formula{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:10px 14px;margin:8px 0 14px;font-family:'SF Mono',Consolas,monospace;font-size:12px;color:#92400e}
+.timeline{border-left:3px solid #4f46e5;margin:12px 0 18px 8px;padding-left:20px}
+.timeline .step{margin-bottom:10px;position:relative}
+.timeline .step::before{content:'';position:absolute;left:-26px;top:6px;width:10px;height:10px;border-radius:50%;background:#4f46e5}
+.timeline .step strong{font-size:13px;color:#334155}
+.timeline .step p{font-size:12px;color:#64748b;margin:2px 0 0}
+hr{border:none;border-top:1px solid #e2e8f0;margin:30px 0}
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Download as PDF (Print → Save as PDF)</button>
+
+<h1>Trip Expense Tracker</h1>
+<div class="subtitle">Progressive Web App — Project Documentation</div>
+<div class="meta">
+<span><strong>Author:</strong> Rakesh Shewale</span>
+<span><strong>AI:</strong> Claude (Anthropic)</span>
+<span><strong>Date:</strong> March 2026</span><br/>
+<span><strong>Stack:</strong> HTML/CSS/JS · Google Apps Script · Google Sheets · GitHub Pages</span><br/>
+<span><strong>Companion to:</strong> Daily Expense Tracker V2</span>
+</div>
+
+<div class="toc">
+<div class="toc-title">Table of Contents</div>
+<ol>
+<li><a href="#s1">Executive Summary</a></li>
+<li><a href="#s2">Design Philosophy & Goals</a></li>
+<li><a href="#s3">System Architecture</a></li>
+<li><a href="#s4">File Structure & Deployment</a></li>
+<li><a href="#s5">Parsing Engine — 6 Stage Pipeline</a></li>
+<li><a href="#s6">Expense Types, Tags & Classification</a></li>
+<li><a href="#s7">Currency System & Formatting</a></li>
+<li><a href="#s8">Summary Tab — Layout & Calculations</a></li>
+<li><a href="#s9">Google Sheets Sync — Smart Diff Strategy</a></li>
+<li><a href="#s10">Input Pattern Reference</a></li>
+<li><a href="#s11">CSS & Glassmorphism UI</a></li>
+<li><a href="#s12">PWA Configuration & Offline Support</a></li>
+<li><a href="#s13">Google Apps Script Backend</a></li>
+<li><a href="#s14">Comparison: Daily Tracker vs Trip Tracker</a></li>
+<li><a href="#s15">Design Decisions & Trade-offs</a></li>
+<li><a href="#s16">Inputs for Future AI Models</a></li>
+<li><a href="#s17">Repository & Setup Guide</a></li>
+<li><a href="#s18">UI Mockups</a></li>
+</ol>
+</div>
+
+<!-- ═══ SECTION 1 ═══ -->
+<h2 id="s1">1. Executive Summary</h2>
+<p>Trip Expense Tracker is a Progressive Web App designed for vacation travel expense tracking. Built as a companion to the Daily Expense Tracker, it takes a fundamentally different approach — instead of structured forms with buttons and dropdowns, it provides a <strong>freeform notepad</strong> where users type expenses exactly as they would in Apple Notes.</p>
+<p>The app parses natural-language entries like <code>food 250</code>, <code>mrt 40</code>, <code>hotel deposit 1200 cc</code> and automatically extracts the item name, amount, payment method, and expense type. A summary tab provides real-time breakdowns by day, cash vs card, with currency-aware formatting.</p>
+
+<div class="highlight">
+<strong>Key achievement:</strong> Entering a vacation expense takes exactly one action — type a line like <code>lunch 350</code> and press Enter. No taps, no selections, no currency symbols needed. The parser handles everything.
+</div>
+
+<p>Data syncs to Google Sheets via Apps Script using a smart diff strategy — only new or changed rows are written, never delete-and-rewrite. This enables real-time sync while keeping the sheet clean for downstream analysis.</p>
+
+<!-- ═══ SECTION 2 ═══ -->
+<h2 id="s2">2. Design Philosophy & Goals</h2>
+
+<h3>2.1 Core Principle: Vacation Mode</h3>
+<p>The app is designed for use while travelling — on beaches, in transit, at restaurants. Every design decision optimizes for <strong>minimum friction</strong>. The user should spend less time on the app than it takes to unlock their phone.</p>
+
+<table>
+<tr><th>Goal</th><th>Approach</th></tr>
+<tr><td>Speed of entry</td><td>Freeform notepad — type naturally, no forms or buttons</td></tr>
+<tr><td>Zero learning curve</td><td>Same format as Apple Notes — if you can type "food 250", you can use the app</td></tr>
+<tr><td>Multi-currency</td><td>Per-trip currency selection with locale-aware formatting</td></tr>
+<tr><td>Offline capable</td><td>PWA with service worker; entries save to localStorage, sync later</td></tr>
+<tr><td>Visual summary</td><td>Auto-parsed summary with cash/card breakdown, daily totals</td></tr>
+<tr><td>Data persistence</td><td>Google Sheets backend for backup and cross-device access</td></tr>
+</table>
+
+<h3>2.2 Notepad-First vs Form-First</h3>
+<p>The Daily Expense Tracker uses a form-first approach: structured buttons for category, subcategory, payment mode. This works for daily tracking where precision matters and categories are well-defined.</p>
+<p>The Trip Expense Tracker inverts this: <strong>intelligence lives in the parser, not the interface</strong>. The user writes freely; the app figures out what they meant. This is better for travel because:</p>
+<ul>
+<li>Expense names are unpredictable (restaurant names, local transport types)</li>
+<li>Speed matters more than categorization</li>
+<li>Users don't want to navigate UI while sightseeing</li>
+<li>A simple text area works one-handed on a moving bus</li>
+</ul>
+
+<h3>2.3 UI Language</h3>
+<ul>
+<li><strong>Glassmorphism:</strong> Translucent panels on soft grey surface, matching Daily Expense Tracker</li>
+<li><strong>Indigo accent:</strong> #4f46e5 for headers, #6366f1 for buttons and active tabs</li>
+<li><strong>Thin borders:</strong> 1px solid rgba(0,0,0,0.08) throughout</li>
+<li><strong>No shadows, no gradients</strong> in the content area — frosted glass effect handles depth</li>
+</ul>
+
+<!-- ═══ SECTION 3 ═══ -->
+<h2 id="s3">3. System Architecture</h2>
+
+<h3>3.1 Component Diagram</h3>
+<div class="arch-box">┌──────────────────────────────────────────────────┐
+│                  USER (Mobile)                    │
+│            Progressive Web App (PWA)              │
+│  ┌────────────────┐   ┌──────────────────┐       │
+│  │   Notes Tab     │   │   Summary Tab     │       │
+│  │  (freeform      │   │  (auto-parsed     │       │
+│  │   textarea)     │   │   breakdown)      │       │
+│  └───────┬────────┘   └────────┬─────────┘       │
+│          │ Auto-push (2s)      │ Read-only        │
+│          │ debounced POST      │                  │
+└──────────┼─────────────────────┼──────────────────┘
+           ▼                     │
+┌──────────────────────────────────────────────────┐
+│          Google Apps Script (Backend)             │
+│  ┌──────────┐         ┌──────────┐              │
+│  │ doPost() │         │ doGet()  │              │
+│  │ Smart    │         │ Pull     │              │
+│  │ Diff     │         │ Recent   │              │
+│  └────┬─────┘         └────┬─────┘              │
+│       ▼                    ▼                     │
+│  ┌──────────────────────────────────┐            │
+│  │  Google Sheets — "Trips"          │            │
+│  │  Tab 1: "Expenses" (parsed rows)  │            │
+│  │  Tab 2: "Notes" (raw text backup) │            │
+│  └──────────────────────────────────┘            │
+└──────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────┐
+│           GitHub Pages (Static Hosting)           │
+│  index.html · app.js · service-worker.js         │
+│  manifest.json · icons/                          │
+└──────────────────────────────────────────────────┘</div>
+
+<h3>3.2 Data Flow</h3>
+<p><strong>Write path (Notepad → Sheet):</strong> User types in textarea → parser extracts entries → 2-second debounce → POST sends trip name, currency, all parsed rows, and raw text → Apps Script compares with existing rows → skips matches, updates changes, appends new, deletes extras.</p>
+<p><strong>Read path (Sheet → App):</strong> Manual sync button triggers GET with <code>limit=2</code> → Apps Script reads Notes tab (most recent 2 trips) → returns trip name, currency, raw text → frontend merges with localStorage data.</p>
+<p><strong>Offline path:</strong> All notepad text saves to localStorage immediately. Sync attempts fail silently. On reconnection, next auto-push sends everything.</p>
+
+<!-- ═══ SECTION 4 ═══ -->
+<h2 id="s4">4. File Structure & Deployment</h2>
+
+<h3>4.1 Repository Structure</h3>
+<pre><code>trip-expense-tracker/
+├── index.html          # HTML + glassmorphism CSS
+├── app.js              # Parsing, rendering, sync logic
+├── manifest.json       # PWA configuration
+├── service-worker.js   # Offline caching (v2)
+└── icons/
+    ├── icon-192.png    # Home screen icon
+    └── icon-512.png    # Splash screen icon</code></pre>
+
+<h3>4.2 Google Sheet Structure</h3>
+<table>
+<tr><th>Sheet Tab</th><th>Columns</th><th>Purpose</th></tr>
+<tr><td><strong>Expenses</strong></td><td>Trip | Date | Item | Amount | Currency | Method | Type</td><td>Parsed expense rows — one row per expense entry</td></tr>
+<tr><td><strong>Notes</strong></td><td>Trip | Currency | RawText</td><td>Raw notepad text backup — one row per trip</td></tr>
+</table>
+
+<h3>4.3 Google Apps Script</h3>
+<table>
+<tr><th>File</th><th>Purpose</th></tr>
+<tr><td><code>Code.gs</code></td><td>doPost (smart diff push) + doGet (pull recent trips). Deployed as Web App, separate from Daily Expense Tracker.</td></tr>
+</table>
+
+<!-- ═══ SECTION 5 ═══ -->
+<h2 id="s5">5. Parsing Engine — 6 Stage Pipeline</h2>
+<p>The parser is the core intelligence of the app. Every line of notepad text passes through 6 stages in sequence:</p>
+
+<h3>Stage 1 — Line Classification</h3>
+<p>Each line is classified as either a <strong>date header</strong> or an <strong>expense entry</strong>. Date detection uses regex matching for multiple formats:</p>
+<table>
+<tr><th>Format</th><th>Examples</th></tr>
+<tr><td>Day + Month</td><td><code>28 Feb</code>, <code>1 Mar</code>, <code>15 January</code></td></tr>
+<tr><td>Compact</td><td><code>2mar</code>, <code>28feb</code></td></tr>
+<tr><td>With separators</td><td><code>02-Mar</code>, <code>1/mar</code></td></tr>
+<tr><td>Month first</td><td><code>Mar 1</code>, <code>Feb 28</code></td></tr>
+</table>
+<p>Date lines become section headers in the summary. Non-date, non-empty lines proceed to Stage 2.</p>
+
+<h3>Stage 2 — Keyword Extraction</h3>
+<p>Three keyword types are detected and flagged:</p>
+<table>
+<tr><th>Keyword</th><th>Detection Pattern</th><th>Action</th><th>Stripped from line?</th></tr>
+<tr><td><code>cc</code></td><td><code>/\bcc\b/i</code></td><td>Sets method = "cc"</td><td>Yes</td></tr>
+<tr><td><code>atm</code> / <code>withdrawal</code></td><td><code>/\batm\b/i</code> or <code>/\bwithdr[a]?w[a]?l?\b/i</code></td><td>Sets type = "withdrawal"</td><td>Yes</td></tr>
+<tr><td><code>deposit</code></td><td><code>/\bdeposit\b/i</code></td><td>Sets type = "deposit"</td><td><strong>No</strong> — kept in item name</td></tr>
+</table>
+
+<div class="highlight">
+<strong>Design decision:</strong> "deposit" stays in the item name for clarity (<code>hotel deposit 1200</code> → "Hotel Deposit"), while "atm" and "withdrawal" are stripped because the tag conveys the same information.
+</div>
+
+<h3>Stage 3 — Comma Stripping</h3>
+<p>Commas are removed from numbers to support both Indian and Western notation:</p>
+<pre><code>// Applied twice to catch nested patterns
+line = line.replace(/(\d),(\d)/g, "$1$2").replace(/(\d),(\d)/g, "$1$2");
+// "10,00,000" → "1000000"
+// "1,000,000" → "1000000"</code></pre>
+
+<h3>Stage 4 — Math Evaluation</h3>
+<p>Mathematical expressions are found and evaluated using a safe evaluator:</p>
+<pre><code>function safeMathEval(expr) {
+  const clean = expr.replace(/\s/g, "");
+  if (!/^[\d+\-*/().]+$/.test(clean)) return null;  // Only allow safe chars
+  if (!/[+\-*/()]/.test(clean)) return null;          // Must have an operator
+  try {
+    const result = new Function("return (" + clean + ")")();
+    if (typeof result === "number" && isFinite(result) && result >= 0)
+      return Math.round(result * 100) / 100;
+    return null;
+  } catch { return null; }
+}</code></pre>
+<p>The regex <code>/[\d]+(?:\.\d+)?[\s]*[+\-*/()][\s\d+\-*/().]*[\d)]/g</code> finds math-like sequences in the line. Supports <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, parentheses, and decimals. Negative results are rejected (travel expenses are positive).</p>
+
+<h3>Stage 5 — Amount Extraction</h3>
+<p>If no math expression found, three patterns are tried in order:</p>
+<table>
+<tr><th>Priority</th><th>Pattern</th><th>Example</th><th>Regex</th></tr>
+<tr><td>1</td><td>Bare number (after keyword stripping)</td><td><code>atm 5000</code> → 5000</td><td><code>/^(\d+(?:\.\d+)?)\s*$/</code></td></tr>
+<tr><td>2</td><td>Number at start</td><td><code>35 metro</code> → 35</td><td><code>/^(\d+(?:\.\d+)?)\s+(.+)/</code></td></tr>
+<tr><td>3</td><td>Number at end</td><td><code>7-11 55</code> → 55</td><td><code>/^(.+?)\s+(\d+(?:\.\d+)?)\s*$/</code></td></tr>
+</table>
+<p>Falls back to 0 if no number found (entry noted without amount).</p>
+
+<h3>Stage 6 — Item Naming</h3>
+<p>Whatever text remains after amount extraction becomes the item name. Empty items get default names based on type:</p>
+<table>
+<tr><th>Type</th><th>Default Name</th><th>Example Input</th></tr>
+<tr><td>withdrawal</td><td>"ATM withdrawal"</td><td><code>atm 5000</code></td></tr>
+<tr><td>deposit</td><td>"Deposit"</td><td><code>deposit 1000</code></td></tr>
+<tr><td>expense</td><td>"—"</td><td>(rare, number-only line)</td></tr>
+</table>
+
+<!-- ═══ SECTION 6 ═══ -->
+<h2 id="s6">6. Expense Types, Tags & Classification</h2>
+
+<h3>6.1 Three Expense Types</h3>
+<table>
+<tr><th>Type</th><th>Trigger</th><th>Counted in Totals?</th><th>Counted in Day Tally?</th><th>Tag</th><th>Tag Color</th></tr>
+<tr><td><span class="badge b-green">Expense</span></td><td>Default (no keyword)</td><td>Yes — Cash or Card box</td><td>Yes</td><td><span class="badge b-blue">cc</span> (if card)</td><td>Blue #185FA5</td></tr>
+<tr><td><span class="badge b-amber">Withdrawal</span></td><td><code>atm</code>, <code>withdrawal</code>, misspellings</td><td>No</td><td>No</td><td><span class="badge b-amber">atm</span></td><td>Amber #854F0B</td></tr>
+<tr><td><span class="badge b-teal">Deposit</span></td><td><code>deposit</code></td><td>No</td><td>No</td><td><span class="badge b-teal">dep</span></td><td>Teal #0F6E56</td></tr>
+</table>
+
+<h3>6.2 Tag Rendering</h3>
+<p>Tags are rendered as outlined pill badges positioned before the amount value in the summary table:</p>
+<pre><code>// Pill tag style (same for cc, atm, dep — only color differs)
+{
+  fontSize: 9, padding: "2px 6px", borderRadius: 8,
+  background: "transparent", border: "1px solid {color}",
+  color: "{color}", fontWeight: 500, marginRight: 4,
+  display: "inline-flex", alignItems: "center"
+}</code></pre>
+
+<h3>6.3 Withdrawal Spelling Tolerance</h3>
+<p>The regex <code>/\bwithdr[a]?w[a]?l?\b/i</code> matches: withdrawal, withdrawl, withdrwal, withdral, withdraw. Common misspellings typed quickly on a phone.</p>
+
+<h3>6.4 Google Sheet Type Column</h3>
+<p>The Type column in the Expenses sheet stores: <code>Expense</code>, <code>Withdrawal</code>, or <code>Deposit</code>. This enables filtering in sheets/charts.</p>
+
+<!-- ═══ SECTION 7 ═══ -->
+<h2 id="s7">7. Currency System & Formatting</h2>
+
+<h3>7.1 Supported Currencies (15)</h3>
+<table>
+<tr><th>Code</th><th>Symbol</th><th>Name</th><th>Format Group</th></tr>
+<tr><td>INR</td><td>₹</td><td>Indian Rupee</td><td>Indian (L, Cr)</td></tr>
+<tr><td>LKR</td><td>LKR</td><td>Sri Lankan Rupee</td><td>Indian (L, Cr)</td></tr>
+<tr><td>THB</td><td>฿</td><td>Thai Baht</td><td>Western (K, M)</td></tr>
+<tr><td>USD</td><td>$</td><td>US Dollar</td><td>Western (K, M)</td></tr>
+<tr><td>EUR</td><td>€</td><td>Euro</td><td>Western (K, M)</td></tr>
+<tr><td>GBP</td><td>£</td><td>British Pound</td><td>Western (K, M)</td></tr>
+<tr><td>JPY</td><td>¥</td><td>Japanese Yen</td><td>Western (K, M)</td></tr>
+<tr><td>SGD</td><td>S$</td><td>Singapore Dollar</td><td>Western (K, M)</td></tr>
+<tr><td>MYR</td><td>RM</td><td>Malaysian Ringgit</td><td>Western (K, M)</td></tr>
+<tr><td>AED</td><td>AED</td><td>UAE Dirham</td><td>Western (K, M)</td></tr>
+<tr><td>AUD</td><td>A$</td><td>Australian Dollar</td><td>Western (K, M)</td></tr>
+<tr><td>PHP</td><td>₱</td><td>Philippine Peso</td><td>Western (K, M)</td></tr>
+<tr><td>VND</td><td>₫</td><td>Vietnamese Dong</td><td>Big currency (K, M from 100K)</td></tr>
+<tr><td>IDR</td><td>Rp</td><td>Indonesian Rupiah</td><td>Big currency (K, M from 100K)</td></tr>
+<tr><td>KRW</td><td>₩</td><td>South Korean Won</td><td>Big currency (K, M from 100K)</td></tr>
+</table>
+
+<h3>7.2 Three Formatting Functions</h3>
+
+<table>
+<tr><th>Function</th><th>Used In</th><th>Behavior</th></tr>
+<tr><td><code>fmt(n)</code></td><td>Table entry amounts</td><td>Full number with locale grouping. <code>1,200</code> / <code>23,000</code></td></tr>
+<tr><td><code>fmtC(n, code)</code></td><td>Daily totals in table</td><td>Currency symbol + number. K/M only for VND/IDR/KRW at 100K+</td></tr>
+<tr><td><code>fmtBox(n, code)</code></td><td>Summary stat boxes only</td><td>Compact, no decimals. Currency-specific abbreviations</td></tr>
+</table>
+
+<h3>7.3 fmtBox() Rules by Currency Group</h3>
+
+<p><strong>Indian system (INR, LKR):</strong></p>
+<div class="formula">Under 1L → Indian grouping (₹85,000)<br/>1,00,000+ → L format (₹1.2 L, ₹5.3 L, ₹12 L)<br/>1,00,00,000+ → Cr format (₹1 Cr, ₹2.5 Cr)</div>
+
+<p><strong>Western system (USD, EUR, GBP, THB, SGD, MYR, AED, AUD, JPY, PHP):</strong></p>
+<div class="formula">Under 10K → full number ($8,500)<br/>10,000+ → K format ($25K, $150K)<br/>1,000,000+ → M format ($2.3M)</div>
+
+<p><strong>Big currencies (VND, IDR, KRW):</strong></p>
+<div class="formula">Under 10K → full number (₫8,500)<br/>10,000+ → K format (₫23K, ₫350K)<br/>1,000,000+ → M format (₫2.3M)</div>
+
+<!-- ═══ SECTION 8 ═══ -->
+<h2 id="s8">8. Summary Tab — Layout & Calculations</h2>
+
+<h3>8.1 Stat Boxes (3 boxes, single row)</h3>
+<table>
+<tr><th>Box</th><th>Background</th><th>Label Color</th><th>Calculation</th></tr>
+<tr><td><span class="badge b-green">Cash</span></td><td>rgba(214,233,192,0.9)</td><td>#3B6D11</td><td>Sum of all expense entries where method = "cash"</td></tr>
+<tr><td><span class="badge b-blue">Card</span></td><td>rgba(200,225,248,0.9)</td><td>#185FA5</td><td>Sum of all expense entries where method = "cc"</td></tr>
+<tr><td><span class="badge b-purple">Total</span></td><td>rgba(218,215,254,0.9)</td><td>#534AB7</td><td>Cash + Card (excludes ATM and deposits)</td></tr>
+</table>
+
+<div class="highlight">
+<strong>Important:</strong> Only <code>type === "expense"</code> entries are counted. ATM withdrawals and deposits are explicitly excluded from all three boxes.
+</div>
+
+<h3>8.2 Summary Table Structure</h3>
+<p>The table is wrapped in a single border container (1px solid rgba(0,0,0,0.08), border-radius 10px) with no internal row borders.</p>
+<ul>
+<li><strong>Column headers:</strong> Details (left) | Amount (right, 100px width)</li>
+<li><strong>Date rows:</strong> Purple-tinted background (rgba(238,237,254,0.5)), shows date + daily total</li>
+<li><strong>Entry rows:</strong> Item name (left, capitalized) + amount with optional tag (right)</li>
+<li><strong>Date separators:</strong> 1px line between date sections (rgba(0,0,0,0.06))</li>
+</ul>
+
+<h3>8.3 Daily Tally Logic</h3>
+<div class="formula">Day total = sum of all entries where type === "expense"<br/>ATM withdrawals excluded. Deposits excluded.</div>
+
+<h3>8.4 No-Amount Warning</h3>
+<p>Entries with 0 amount and type "expense" trigger a warning banner at the bottom listing the items not included in totals.</p>
+
+<!-- ═══ SECTION 9 ═══ -->
+<h2 id="s9">9. Google Sheets Sync — Smart Diff Strategy</h2>
+
+<h3>9.1 Why Not Delete-and-Rewrite?</h3>
+<p>The original approach deleted all existing rows for a trip and re-appended fresh ones. Problems:</p>
+<ul>
+<li>Wasteful for 50 entries when only 1 is new</li>
+<li>Risk of data loss during network interruption mid-delete</li>
+<li>Breaks downstream formulas/charts that reference specific rows</li>
+<li>Scales poorly — O(n) deletes + O(n) appends on every sync</li>
+</ul>
+
+<h3>9.2 Smart Diff Algorithm</h3>
+<p>The doPost() function now uses positional comparison:</p>
+<pre><code>// For each incoming row at position j:
+if (j < existingRows.length) {
+  // Compare with existing row at same position
+  if (match) → skip       // Most common: 95% of rows
+  if (!match) → update     // Rare: user edited an old entry
+} else {
+  → append                  // New entries at the end
+}
+
+// If notepad has fewer entries than sheet:
+for (j = existingRows.length - 1; j >= incomingRows.length; j--) {
+  → delete from bottom up   // Rare: user removed entries
+}</code></pre>
+
+<h3>9.3 Comparison Fields</h3>
+<p>Six fields are compared per row: Date, Item, Amount, Currency, Method, Type. Trip name is used as the grouping key but not compared (it's the filter).</p>
+
+<h3>9.4 Sync Timing</h3>
+<table>
+<tr><th>Trigger</th><th>What Happens</th><th>Scope</th></tr>
+<tr><td>Auto-push (2s debounce)</td><td>POST all parsed rows + raw text</td><td>Active trip only</td></tr>
+<tr><td>Manual sync (refresh button)</td><td>POST active trip → GET latest 2 trips</td><td>Current + 1 previous</td></tr>
+<tr><td>No URL configured</td><td>Button spins for 0.6s (visual feedback)</td><td>N/A</td></tr>
+</table>
+
+<h3>9.5 Notes Tab</h3>
+<p>Raw notepad text is stored in the Notes tab (one row per trip). This is the source of truth for cross-device sync — when pulling, the raw text is used to recreate trips locally. The Expenses tab is the structured data layer for analysis.</p>
+
+<!-- ═══ SECTION 10 ═══ -->
+<h2 id="s10">10. Input Pattern Reference</h2>
+
+<table>
+<tr><th>Pattern</th><th>Example Input</th><th>Parsed Item</th><th>Amount</th><th>Tags</th></tr>
+<tr><td>Amount before item</td><td><code>35 metro</code></td><td>Metro</td><td>35</td><td>—</td></tr>
+<tr><td>Amount after item</td><td><code>7-11 55</code></td><td>7-11</td><td>55</td><td>—</td></tr>
+<tr><td>Credit card</td><td><code>lunch 300 cc</code></td><td>Lunch</td><td>300</td><td><span class="badge b-blue">cc</span></td></tr>
+<tr><td>Addition</td><td><code>bar 650+100</code></td><td>Bar</td><td>750</td><td>—</td></tr>
+<tr><td>Multiple additions</td><td><code>siam 199+60+80+45 cc</code></td><td>Siam</td><td>384</td><td><span class="badge b-blue">cc</span></td></tr>
+<tr><td>Multiplication</td><td><code>4*300 beer</code></td><td>Beer</td><td>1,200</td><td>—</td></tr>
+<tr><td>Mixed math</td><td><code>3*157+2*89</code></td><td>—</td><td>649</td><td>—</td></tr>
+<tr><td>Parentheses</td><td><code>(150+50)*2 food</code></td><td>Food</td><td>400</td><td>—</td></tr>
+<tr><td>Division</td><td><code>1200/4 split</code></td><td>Split</td><td>300</td><td>—</td></tr>
+<tr><td>Comma numbers</td><td><code>10,00,000 shopping</code></td><td>Shopping</td><td>10,00,000</td><td>—</td></tr>
+<tr><td>ATM withdrawal</td><td><code>atm 5000</code></td><td>ATM Withdrawal</td><td>5,000</td><td><span class="badge b-amber">atm</span></td></tr>
+<tr><td>ATM with math</td><td><code>atm withdrwal 2000+200</code></td><td>ATM Withdrawal</td><td>2,200</td><td><span class="badge b-amber">atm</span></td></tr>
+<tr><td>Deposit (plain)</td><td><code>deposit 1000</code></td><td>Deposit</td><td>1,000</td><td><span class="badge b-teal">dep</span></td></tr>
+<tr><td>Deposit (named)</td><td><code>hotel deposit 1200</code></td><td>Hotel Deposit</td><td>1,200</td><td><span class="badge b-teal">dep</span></td></tr>
+<tr><td>No amount</td><td><code>Metro 3 cc</code></td><td>Metro 3</td><td>—</td><td><span class="badge b-blue">cc</span></td></tr>
+</table>
+
+<!-- ═══ SECTION 11 ═══ -->
+<h2 id="s11">11. CSS & Glassmorphism UI</h2>
+
+<h3>11.1 Outer Container</h3>
+<pre><code>background: #f4f5f9;
+border-radius: 16px;
+padding: 12px 12px 16px;
+min-height: 200px;</code></pre>
+
+<h3>11.2 Glass Cards (Trip List)</h3>
+<pre><code>background: rgba(255,255,255,0.45);
+border: 1px solid rgba(0,0,0,0.08);
+border-radius: 12px;</code></pre>
+
+<h3>11.3 Glass Input Fields</h3>
+<pre><code>background: rgba(255,255,255,0.5);
+border: 1px solid rgba(0,0,0,0.08);
+border-radius: 8px;</code></pre>
+
+<h3>11.4 Tab Switcher</h3>
+<pre><code>/* Container */
+background: rgba(255,255,255,0.35);
+border: 1px solid rgba(0,0,0,0.08);
+border-radius: 8px;
+
+/* Active tab */
+background: #6366f1;
+color: #fff;
+
+/* Inactive tab */
+background: transparent;
+color: var(--color-text-tertiary);</code></pre>
+
+<h3>11.5 Stat Box Colors</h3>
+<table>
+<tr><th>Box</th><th>Background</th><th>Border</th></tr>
+<tr><td>Cash</td><td>rgba(214,233,192,0.9)</td><td>rgba(59,109,17,0.25)</td></tr>
+<tr><td>Card</td><td>rgba(200,225,248,0.9)</td><td>rgba(24,95,165,0.25)</td></tr>
+<tr><td>Total</td><td>rgba(218,215,254,0.9)</td><td>rgba(83,74,183,0.25)</td></tr>
+</table>
+
+<h3>11.6 Date Row</h3>
+<pre><code>background: rgba(238,237,254,0.5);
+color: #3C3489; /* text */
+color: #534AB7; /* amount */</code></pre>
+
+<!-- ═══ SECTION 12 ═══ -->
+<h2 id="s12">12. PWA Configuration & Offline Support</h2>
+
+<h3>12.1 Service Worker</h3>
+<p>Cache-first strategy with network fallback. Cache name: <code>trip-exp-cache-v2</code>.</p>
+<pre><code>const urlsToCache = [
+  "./", "./index.html", "./app.js", "./manifest.json",
+  "./icons/icon-192.png", "./icons/icon-512.png"
+];</code></pre>
+<p>On activation, old caches (v1) are automatically purged.</p>
+
+<h3>12.2 Manifest</h3>
+<pre><code>{
+  "name": "Trip Expenses",
+  "short_name": "TripExp",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait"
+}</code></pre>
+
+<h3>12.3 Icon Links</h3>
+<p>Three link tags ensure icons work across all browsers and platforms:</p>
+<pre><code>&lt;link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/&gt;
+&lt;link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png"/&gt;
+&lt;link rel="apple-touch-icon" href="icons/icon-192.png"/&gt;</code></pre>
+
+<h3>12.4 Offline Behavior</h3>
+<ul>
+<li>Notepad fully functional offline — saves to localStorage</li>
+<li>Summary tab works from parsed localStorage data</li>
+<li>Sync button spins briefly but no network call</li>
+<li>Auto-push attempts fail silently via <code>.catch(() => {})</code></li>
+<li>On reconnection, next typing pause triggers full sync</li>
+</ul>
+
+<!-- ═══ SECTION 13 ═══ -->
+<h2 id="s13">13. Google Apps Script Backend</h2>
+
+<h3>13.1 doPost() — Smart Diff Push</h3>
+<table>
+<tr><th>Step</th><th>Action</th></tr>
+<tr><td>1</td><td>Parse incoming JSON: trip name, currency, rows array, raw text</td></tr>
+<tr><td>2</td><td>Ensure Expenses and Notes sheets exist (create with headers if missing)</td></tr>
+<tr><td>3</td><td>Read all existing rows for this trip from Expenses sheet</td></tr>
+<tr><td>4</td><td>Compare positionally — skip matches, update changes, append new</td></tr>
+<tr><td>5</td><td>Delete extra rows if notepad has fewer entries (bottom-up deletion)</td></tr>
+<tr><td>6</td><td>Update/insert raw text in Notes sheet</td></tr>
+<tr><td>7</td><td>Return JSON: { success, updated, appended, deleted, total }</td></tr>
+</table>
+
+<h3>13.2 doGet() — Pull Recent Trips</h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+<tr><td><code>limit</code></td><td>Optional integer</td><td>Max trips to return. Default: all. App sends <code>limit=2</code>.</td></tr>
+</table>
+<p>Reads Notes sheet from bottom up (most recent first). Returns array of { name, currency, text } objects.</p>
+
+<h3>13.3 Deployment Notes</h3>
+<ul>
+<li>Execute as: <strong>Me</strong></li>
+<li>Who has access: <strong>Anyone</strong> (required for cross-origin fetch)</li>
+<li>Separate deployment from Daily Expense Tracker (different sheet, different script)</li>
+<li>Code changes require: Deploy → Manage Deployments → Edit → bump version → Deploy</li>
+</ul>
+
+<!-- ═══ SECTION 14 ═══ -->
+<h2 id="s14">14. Comparison: Daily Tracker vs Trip Tracker</h2>
+
+<table>
+<tr><th>Aspect</th><th>Daily Expense Tracker</th><th>Trip Expense Tracker</th></tr>
+<tr><td><strong>Input method</strong></td><td>Tap buttons for category, mode, details</td><td>Freeform text notepad</td></tr>
+<tr><td><strong>Categories</strong></td><td>8 structured (Food, Shopping, Transport...)</td><td>Whatever you type (free-form item names)</td></tr>
+<tr><td><strong>Currency</strong></td><td>Single (INR)</td><td>Per-trip selection (15 currencies)</td></tr>
+<tr><td><strong>Payment modes</strong></td><td>UPI, Credit card, E-wallet, Cash (buttons)</td><td>Cash (default) or CC (type "cc")</td></tr>
+<tr><td><strong>Scope</strong></td><td>Monthly salary/expense cycle</td><td>Per-trip vacation tracking</td></tr>
+<tr><td><strong>Bank balances</strong></td><td>Yes — HDFC, Kotak, ICICI, Wallet, Cash</td><td>No — just cash/card totals</td></tr>
+<tr><td><strong>Charts</strong></td><td>Bar, doughnut, pie (Chart.js)</td><td>None — stat boxes + table only</td></tr>
+<tr><td><strong>Summary</strong></td><td>Monthly with 6-month trend</td><td>Per-trip with daily breakdown</td></tr>
+<tr><td><strong>Sync strategy</strong></td><td>Append-only POST</td><td>Smart diff (compare, update, append, delete)</td></tr>
+<tr><td><strong>Backend actions</strong></td><td>doPost (write), doGet (daily/monthdata/trend)</td><td>doPost (smart diff), doGet (pull notes)</td></tr>
+<tr><td><strong>Google Sheet</strong></td><td>"Form entries" — columns A–O</td><td>"Trips" — Expenses + Notes tabs</td></tr>
+<tr><td><strong>UI style</strong></td><td>Glassmorphism + color-coded buttons</td><td>Glassmorphism + notepad (shared aesthetic)</td></tr>
+<tr><td><strong>Indigo accent</strong></td><td>#4f46e5</td><td>#4f46e5 (same)</td></tr>
+</table>
+
+<div class="highlight">
+<strong>Workflow connection:</strong> After a trip, the user manually adds the total trip spend as a single "Vacation" entry (Other Expenses → Vacation) in the Daily Expense Tracker. The two apps don't auto-sync — they serve different purposes.
+</div>
+
+<!-- ═══ SECTION 15 ═══ -->
+<h2 id="s15">15. Design Decisions & Trade-offs</h2>
+
+<h3>15.1 Why Not Multi-Currency Per Trip?</h3>
+<p>The original prototype parsed currency from each line (<code>food 25rs</code>, <code>mrt 40 baht</code>). This was abandoned because:</p>
+<ul>
+<li>Added complexity to every line typed</li>
+<li>Most trips use one currency for 90%+ of transactions</li>
+<li>Currency conversion rates change daily — in-app conversion would be unreliable</li>
+<li>Single currency per trip keeps the summary clean and totals meaningful</li>
+</ul>
+
+<h3>15.2 Why Smart Diff Instead of Append-Only?</h3>
+<p>The Daily Tracker uses pure append (one POST per submit). The Trip Tracker can't do this because the notepad is re-parsed entirely on every sync. Append-only would create duplicates. Smart diff was chosen over delete-and-rewrite to minimize sheet operations and preserve row stability.</p>
+
+<h3>15.3 Why No Categories?</h3>
+<p>Travel expenses don't fit neatly into predefined categories. "BTS 1 cc" could be transport. "7-11 55" could be food or shopping. Forcing categorization slows entry and adds zero value during the trip. If analysis is needed later, the item names in the sheet can be manually categorized.</p>
+
+<h3>15.4 Why localStorage Instead of IndexedDB?</h3>
+<p>The data is small (text strings). localStorage is simpler, synchronous, and sufficient. IndexedDB would add complexity with no meaningful benefit for this use case.</p>
+
+<h3>15.5 Why Separate Apps Script Deployments?</h3>
+<p>Each Google Sheet has its own Apps Script project. The Daily Tracker's Code.gs lives in the "Form entries" sheet; the Trip Tracker's Code.gs lives in the "Trips" sheet. They can't share a deployment. This is actually beneficial — changes to one can't break the other.</p>
+
+<!-- ═══ SECTION 16 ═══ -->
+<h2 id="s16">16. Inputs for Future AI Models</h2>
+
+<div class="highlight">
+<strong>Critical context for any AI continuing work on this project:</strong>
+</div>
+
+<ol>
+<li><strong>The parser is the core.</strong> All intelligence is in <code>parseLine()</code>. Any new feature (new keywords, new math operators, new patterns) must be added there. The UI is intentionally dumb.</li>
+<li><strong>"deposit" is NOT stripped</strong> from the line — unlike "atm" and "cc" which are removed. This was a deliberate design choice for readability.</li>
+<li><strong>Three formatting functions exist.</strong> <code>fmt()</code> for table amounts (full numbers), <code>fmtC()</code> for daily totals (K/M for big currencies), <code>fmtBox()</code> for stat boxes (compact, no decimals, locale-aware). Don't mix them.</li>
+<li><strong>Day tallies exclude ATM and deposits.</strong> Only <code>type === "expense"</code> entries count in daily totals and summary boxes.</li>
+<li><strong>Commas are stripped twice</strong> — <code>.replace(/(\d),(\d)/g, "$1$2")</code> applied twice to handle Indian notation where commas nest (10,00,000 → first pass → 100,0000 → second pass → 1000000).</li>
+<li><strong>Smart diff is positional.</strong> Entry 1 in notepad matches row 1 for that trip in sheet. Reordering entries in the notepad will cause all rows to be "updated" even if content is the same — just in different positions. This is acceptable for the rare reorder case.</li>
+<li><strong>SCRIPT_URL is in app.js line 3.</strong> If empty, sync is disabled but the app works fully offline with localStorage.</li>
+<li><strong>Service worker cache must be bumped</strong> on changes — update the version string in <code>CACHE_NAME</code>. Users on cached old versions won't see updates until the worker re-activates.</li>
+<li><strong>Two separate sheet tabs.</strong> "Expenses" is the structured data (for charts/analysis). "Notes" is the raw text (for cross-device sync). They must stay in sync — doPost writes to both.</li>
+<li><strong>The app is a companion</strong> to Daily Expense Tracker, not a replacement. They share visual language but have completely different data models, backends, and use cases.</li>
+</ol>
+
+<h3>Known Limitations</h3>
+<ol>
+<li>No edit or delete of individual entries (only via notepad re-edit and re-sync)</li>
+<li>No currency conversion — single currency per trip</li>
+<li>No charts or graphs — stat boxes and table only</li>
+<li>No budget tracking or spending alerts</li>
+<li>Parser can misinterpret lines with multiple numbers (e.g., "Metro 1 10" → item "Metro 1", amount 10)</li>
+<li>Auth token visible in frontend JS (acceptable for personal use)</li>
+<li>Full sheet scan on doPost comparison — works fine for typical trip sizes (&lt;100 entries)</li>
+<li>No multi-trip summary or trip-to-trip comparison</li>
+</ol>
+
+<!-- ═══ SECTION 17 ═══ -->
+<h2 id="s17">17. Repository & Setup Guide</h2>
+
+<h3>17.1 Deployment Info</h3>
+<table>
+<tr><td><strong>Hosting</strong></td><td>GitHub Pages (main branch, root folder)</td></tr>
+<tr><td><strong>Files</strong></td><td>4 files + 2 icons (index.html, app.js, service-worker.js, manifest.json)</td></tr>
+<tr><td><strong>Dependencies</strong></td><td>None — pure vanilla JS, no CDN libraries</td></tr>
+<tr><td><strong>Backend</strong></td><td>Google Apps Script (linked to Google Sheet "Trips")</td></tr>
+<tr><td><strong>Companion app</strong></td><td>Daily Expense Tracker (separate repo, separate sheet)</td></tr>
+</table>
+
+<h3>17.2 Setup Steps</h3>
+
+<p><strong>GitHub Pages:</strong></p>
+<ol>
+<li>Create new GitHub repository</li>
+<li>Push index.html, app.js, manifest.json, service-worker.js, and icons/ folder</li>
+<li>Settings → Pages → Source: main branch → Save</li>
+<li>Access at <code>https://username.github.io/repo-name/</code></li>
+</ol>
+
+<p><strong>Google Sheets:</strong></p>
+<ol>
+<li>Create Google Sheet named "Trips"</li>
+<li>Create "Expenses" tab with headers: Trip | Date | Item | Amount | Currency | Method | Type</li>
+<li>Extensions → Apps Script → paste Code.gs → Save</li>
+<li>Deploy → New Deployment → Web App (Execute as: Me, Access: Anyone)</li>
+<li>Copy Web App URL → paste into <code>SCRIPT_URL</code> in app.js line 3</li>
+</ol>
+
+<p><strong>iPhone Home Screen:</strong></p>
+<ol>
+<li>Open GitHub Pages URL in Safari</li>
+<li>Share button → Add to Home Screen</li>
+<li>App runs standalone with custom travel icon</li>
+</ol>
+
+<p><strong>Updating Code.gs:</strong></p>
+<ol>
+<li>Edit code in Apps Script editor</li>
+<li>Deploy → Manage Deployments → Edit existing → bump version → Deploy</li>
+<li>URL stays the same; new version goes live</li>
+</ol>
+
+<!-- ═══ SECTION 18 ═══ -->
+<h2 id="s18">18. UI Mockups</h2>
+
+<h3>18.1 Home Screen — Trip List</h3>
+<div style="max-width:360px;margin:16px auto;background:#f4f5f9;border-radius:16px;padding:16px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <div style="text-align:center;font-size:17px;font-weight:700;color:#4f46e5;margin-bottom:14px;position:relative">Trip expenses<span style="position:absolute;right:0;top:2px;color:#94a3b8;font-size:14px">↻</span></div>
+  <div style="display:flex;gap:6px;margin-bottom:14px">
+    <div style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.5);font-size:13px;color:#94a3b8">Create new trip</div>
+    <div style="padding:6px 6px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.5);font-size:11px;color:#475569;text-align:center;min-width:52px">₹ INR</div>
+    <div style="padding:8px 16px;border-radius:8px;background:#6366f1;color:#fff;font-size:12px;font-weight:600">Add</div>
+  </div>
+  <div style="background:rgba(255,255,255,.45);border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:14px 16px;margin-bottom:8px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;font-weight:600;color:#1a1a1a">Bangkok Mar 2026</span><span style="font-size:10px;color:#94a3b8">THB · 14 entries</span></div>
+    <div style="display:flex;gap:12px;margin-top:6px;font-size:12px;color:#64748b"><span>Cash ฿8,450</span><span>CC ฿4,200</span><span style="font-weight:600;color:#1a1a1a">Total ฿12,650</span></div>
+  </div>
+  <div style="background:rgba(255,255,255,.45);border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:14px 16px;margin-bottom:8px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;font-weight:600;color:#1a1a1a">Goa Jan 2026</span><span style="font-size:10px;color:#94a3b8">INR · 9 entries</span></div>
+    <div style="display:flex;gap:12px;margin-top:6px;font-size:12px;color:#64748b"><span>Cash ₹3,200</span><span>CC ₹8,500</span><span style="font-weight:600;color:#1a1a1a">Total ₹11,700</span></div>
+  </div>
+</div>
+
+<h3>18.2 Notes Tab</h3>
+<div style="max-width:360px;margin:16px auto;background:#f4f5f9;border-radius:16px;padding:16px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <div style="padding:5px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.5);font-size:12px;color:#64748b">←</div>
+    <div style="flex:1;font-size:15px;font-weight:600;color:#4f46e5">Bangkok Mar 2026</div>
+  </div>
+  <div style="display:flex;gap:0;margin-bottom:10px;background:rgba(255,255,255,.35);border-radius:8px;padding:3px;border:1px solid rgba(0,0,0,.08)">
+    <div style="flex:1;padding:6px;text-align:center;font-size:11px;font-weight:600;background:#6366f1;color:#fff;border-radius:6px">Notes</div>
+    <div style="flex:1;padding:6px;text-align:center;font-size:11px;font-weight:600;color:#94a3b8">Summary</div>
+  </div>
+  <div style="background:rgba(255,255,255,.5);border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:14px 16px;font-family:'SF Mono',Menlo,monospace;font-size:13px;line-height:1.8;color:#334155;min-height:200px;white-space:pre-line">1 Mar
+35 metro
+130 cab
+468 7-11 cc
+
+2 Mar
+Food 250
+MRT 40
+Bar 650+100
+Siam paragon 199+60+80 cc
+atm 5000
+hotel deposit 1200</div>
+  <div style="font-size:10px;color:#94a3b8;margin-top:6px;padding:0 4px">Just type naturally. Dates as headers, amount before or after item, "cc" for credit card, "+" to add amounts.</div>
+</div>
+
+<h3>18.3 Summary Tab</h3>
+<div style="max-width:360px;margin:16px auto;background:#f4f5f9;border-radius:16px;padding:16px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+    <div style="padding:5px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.5);font-size:12px;color:#64748b">←</div>
+    <div style="flex:1;font-size:15px;font-weight:600;color:#4f46e5">Bangkok Mar 2026</div>
+  </div>
+  <div style="display:flex;gap:0;margin-bottom:10px;background:rgba(255,255,255,.35);border-radius:8px;padding:3px;border:1px solid rgba(0,0,0,.08)">
+    <div style="flex:1;padding:6px;text-align:center;font-size:11px;font-weight:600;color:#94a3b8">Notes</div>
+    <div style="flex:1;padding:6px;text-align:center;font-size:11px;font-weight:600;background:#6366f1;color:#fff;border-radius:6px">Summary</div>
+  </div>
+
+  <div style="display:flex;gap:6px;margin-bottom:12px">
+    <div style="flex:1;background:rgba(214,233,192,.9);border:1px solid rgba(59,109,17,.25);border-radius:10px;padding:8px 10px;text-align:center"><div style="font-size:8px;color:#3B6D11;text-transform:uppercase;letter-spacing:.8px;font-weight:700">Cash</div><div style="font-size:14px;font-weight:600;color:#27500A;margin-top:1px">฿1,143</div></div>
+    <div style="flex:1;background:rgba(200,225,248,.9);border:1px solid rgba(24,95,165,.25);border-radius:10px;padding:8px 10px;text-align:center"><div style="font-size:8px;color:#185FA5;text-transform:uppercase;letter-spacing:.8px;font-weight:700">Card</div><div style="font-size:14px;font-weight:600;color:#0C447C;margin-top:1px">฿747</div></div>
+    <div style="flex:1;background:rgba(218,215,254,.9);border:1px solid rgba(83,74,183,.25);border-radius:10px;padding:8px 10px;text-align:center"><div style="font-size:8px;color:#534AB7;text-transform:uppercase;letter-spacing:.8px;font-weight:700">Total</div><div style="font-size:15px;font-weight:600;color:#3C3489;margin-top:1px">฿1,890</div></div>
+  </div>
+
+  <div style="border:1px solid rgba(0,0,0,.08);border-radius:10px;overflow:hidden">
+    <div style="display:flex;padding:6px 10px;border-bottom:1px solid rgba(0,0,0,.08)">
+      <div style="flex:1;font-size:9px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px">Details</div>
+      <div style="width:90px;text-align:right;font-size:9px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px">Amount</div>
+    </div>
+
+    <div style="display:flex;padding:7px 10px;background:rgba(238,237,254,.5)">
+      <div style="flex:1;font-weight:600;font-size:12px;color:#3C3489">1 Mar</div>
+      <div style="width:90px;text-align:right;font-weight:600;font-size:11px;color:#534AB7">฿633</div>
+    </div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">Metro</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a">35</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">Cab</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a">130</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">7-11</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a"><span style="font-size:8px;padding:1px 5px;border-radius:7px;border:1px solid #185FA5;color:#185FA5;font-weight:600;margin-right:3px">cc</span>468</div></div>
+
+    <div style="border-top:1px solid rgba(0,0,0,.06)"></div>
+
+    <div style="display:flex;padding:7px 10px;background:rgba(238,237,254,.5)">
+      <div style="flex:1;font-weight:600;font-size:12px;color:#3C3489">2 Mar</div>
+      <div style="width:90px;text-align:right;font-weight:600;font-size:11px;color:#534AB7">฿1,257</div>
+    </div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">Food</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a">250</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">MRT</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a">40</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">Bar</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a">750</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">Siam Paragon</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a"><span style="font-size:8px;padding:1px 5px;border-radius:7px;border:1px solid #185FA5;color:#185FA5;font-weight:600;margin-right:3px">cc</span>384</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">ATM Withdrawal</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a"><span style="font-size:8px;padding:1px 5px;border-radius:7px;border:1px solid #854F0B;color:#854F0B;font-weight:600;margin-right:3px">atm</span>5,000</div></div>
+    <div style="display:flex;padding:4px 10px 4px 18px;font-size:12px"><div style="flex:1;color:#1a1a1a">Hotel Deposit</div><div style="width:90px;text-align:right;font-weight:500;color:#1a1a1a"><span style="font-size:8px;padding:1px 5px;border-radius:7px;border:1px solid #0F6E56;color:#0F6E56;font-weight:600;margin-right:3px">dep</span>1,200</div></div>
+  </div>
+</div>
+
+<hr/>
+<p style="text-align:center;color:#94a3b8;font-size:12px;margin-top:20px"><em>Document generated through human-AI collaborative development, March 2026.</em></p>
+
+</body>
+</html>
